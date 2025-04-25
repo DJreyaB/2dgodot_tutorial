@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c5rg1d3c8a72x"]
+[gd_scene load_steps=5 format=3 uid="uid://c5rg1d3c8a72x"]
 
 [ext_resource type="Script" uid="uid://dr5hlngcvta3b" path="res://mob_enemy.gd" id="1_ljpcw"]
 [ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://characters/slime/slime.tscn" id="1_ukp0r"]
+[ext_resource type="Texture2D" uid="uid://b7rhtttevhxtj" path="res://characters/ground_shadow.png" id="2_wns1r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ljpcw"]
 radius = 56.0357
@@ -15,5 +16,10 @@ script = ExtResource("1_ljpcw")
 position = Vector2(1, -22)
 shape = SubResource("CircleShape2D_ljpcw")
 
+[node name="GroundShadow2" type="Sprite2D" parent="."]
+position = Vector2(-1, 5)
+texture = ExtResource("2_wns1r")
+
 [node name="Slime" parent="." instance=ExtResource("1_ukp0r")]
+unique_name_in_owner = true
 position = Vector2(1, 6)
