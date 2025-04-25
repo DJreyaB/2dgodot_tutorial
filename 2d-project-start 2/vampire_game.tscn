@@ -1,11 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://w8g5djl8qng4"]
+[gd_scene load_steps=6 format=3 uid="uid://w8g5djl8qng4"]
 
+[ext_resource type="Script" uid="uid://nj7gjxpe4fjt" path="res://vampire_game.gd" id="1_j804y"]
 [ext_resource type="PackedScene" uid="uid://bpk57aejlthx3" path="res://player.tscn" id="1_kboi8"]
 [ext_resource type="PackedScene" uid="uid://cx4wfvq8sxi8y" path="res://pine_tree.tscn" id="2_3b6cr"]
 [ext_resource type="PackedScene" uid="uid://c5rg1d3c8a72x" path="res://slime_enemy.tscn" id="3_5tmog"]
 
+[sub_resource type="Curve2D" id="Curve2D_5tmog"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -336, -168, 0, 0, 0, 0, -366, 1249, 0, 0, 0, 0, 2191, 1247, 0, 0, 0, 0, 2195, -165, 0, 0, 0, 0, -336, -168)
+}
+point_count = 5
+
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_j804y")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -16,6 +24,16 @@ offset_bottom = 1108.0
 
 [node name="Player" parent="." instance=ExtResource("1_kboi8")]
 position = Vector2(832, 493)
+
+[node name="Path2D" type="Path2D" parent="Player"]
+position = Vector2(-832, -493)
+curve = SubResource("Curve2D_5tmog")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D"]
+unique_name_in_owner = true
+position = Vector2(-351.099, 545.196)
+rotation = 1.59196
+progress = 713.356
 
 [node name="mob" parent="." instance=ExtResource("3_5tmog")]
 position = Vector2(1342, 495)
@@ -49,3 +67,40 @@ position = Vector2(708, 249)
 
 [node name="PineTree8" parent="." instance=ExtResource("2_3b6cr")]
 position = Vector2(1628, 661)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="Game_Over" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Game_Over"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.721569, 0.388235, 0.776471, 0.643137)
+
+[node name="Label" type="Label" parent="Game_Over/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -167.0
+offset_top = -134.0
+offset_right = 167.0
+offset_bottom = 134.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 127
+text = "Game Over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
+[connection signal="timeout" from="Timer" to="." method="_on_mob_timeout"]
