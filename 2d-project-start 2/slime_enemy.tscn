@@ -10,8 +10,8 @@ radius = 56.0357
 script = ExtResource("1_ljpcw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(572, 417)
+position = Vector2(1, -22)
 shape = SubResource("CircleShape2D_ljpcw")
 
 [node name="Slime" parent="." instance=ExtResource("1_ukp0r")]
-position = Vector2(572, 445)
+position = Vector2(1, 6)
